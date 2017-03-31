@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[13]:
+# In[39]:
 
 # Making a horizontal histogram using str() x vector label values
 # Note : we can't use np.array for this as it returns only NaN values. As general, np.array is not recommended for handling str()
@@ -63,11 +63,11 @@ def autolabel(rects, ax):
 autolabel(rects, ax)
 plt.tight_layout()
 plt.legend(loc='upper center')
-plt.savefig("D:/work/github/horizontal_histgrm_1.png")
+plt.savefig("D:/work/github/histgrm_1.png")
 plt.show()
 
 
-# In[14]:
+# In[38]:
 
 # form improvement over vertical histogram
 import pandas as pd
@@ -113,11 +113,11 @@ for i, rect in enumerate(rects):
         clip_on=True, fontweight='bold')
 
 plt.tight_layout() # allows to autosize-labels & tickers to fit diagram
-plt.savefig("D:/work/github/horizontal_histgrm_2.png")
+plt.savefig("D:/work/github/histgrm_2.png")
 plt.show()
 
 
-# In[22]:
+# In[37]:
 
 # improvement form for vertical histogram
 import numpy as np
@@ -174,7 +174,57 @@ def autolabel(rects, ax):
 autolabel(rects, ax)
 plt.tight_layout()
 plt.legend(loc='upper center')
-plt.savefig("D:\work\github\horizontal_histgrm_3.png")
+plt.savefig("D:\work\github\histgrm_3.png")
+plt.show()
+
+
+# In[36]:
+
+# form improvement over vertical histogram
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Import data
+data = pd.read_table("D:\work\essai2.txt", sep='\t')
+
+# Reverse table from smallest to highest
+data2 = data.sort_values(by=['y', 'x'], ascending=[True, False])
+tickers = data2['x'].values
+
+# Plot data
+fig, ax = plt.subplots(figsize=(10, 10))
+rects = ax.barh(range(len(tickers)), data2['y'].values, align='center', color='#4E8DC4', alpha=0.6)
+ax.set_yticks(range(len(tickers)))
+ax.set_yticklabels(tickers, fontweight='normal')
+ax.set_xlabel('x label', size= 13)
+ax.set_ylabel('y label', size = 13)
+ax.set_title('title', fontweight='bold', size=15)
+ax.set_ylim((-1, len(tickers))) # allows to auto-size Y axis depending of [-1:N] bars
+ax.grid(False) #no grid
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+# Rotating the xticklabels for patents volume
+for label in ax.get_xmajorticklabels():
+    label.set_rotation(30)
+    label.set_verticalalignment("top")
+
+# Add label to the right of the bars
+for i, rect in enumerate(rects):
+    # Get width of the bar
+    xloc = int(rect.get_width()) + 29 #x-dimension label position (the highest, the farthest)
+    # Center the text vertically in the bar
+    yloc = rect.get_y() + rect.get_height()/2.0 #y-dimension label position
+    label = ax.text(
+        xloc, yloc,
+        data2['y'].values[i],
+        horizontalalignment='right',
+        verticalalignment='center',
+        color='k',
+        clip_on=True, fontweight='bold')
+
+plt.tight_layout() # allows to autosize-labels & tickers to fit diagram
+plt.savefig("D:/work/github/histgrm_4.png")
 plt.show()
 
 
