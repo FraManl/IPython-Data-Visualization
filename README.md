@@ -1,3 +1,5 @@
 # IPython-Data-Analysis-Visualization
 
-blablabla
+
+A collection of ready to use, in & out rendering scripts written in Python.
+ 
